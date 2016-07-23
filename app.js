@@ -8,9 +8,29 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var pg = require('pg');
 var Sequelize = require('sequelize');
+const DbService = require('./lib/service/dbService');
+const dbService = new DbService({
+    dbHost: 'localhost',
+    dbPort: '5432',
+    dbUsername: 'yuhogyun',
+    dbPassword: 'ghrbsdl114!',
+    dbName: 'restroom',
+    dbLogging: 'true'
+});
+var cors = require('cors');
+//console.log(dbService.getSequelize() == dbService);
+
+exports.dbService = dbService;
+//console.log(exports.dbService);
+//console.log(module);
 var routes = require('./routes/index');
 var jsonfile = require('jsonfile');
+
+
 var app = express();
+app.use(cors({
+    origin: 'http://localhost:8100'
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,60 +43,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', routes);
 
-const DbService = require('./lib/service/dbService');
 const DbModel = require('./lib/service/dbModel');
 
-var dbService = new DbService({
-  dbHost: 'localhst',
-  dbPort: '5432',
-  dbUsername: 'yuhogyun',
-  dbPassword: 'ghrbsdl114!@',
-  dbName: 'restroom',
-  dbLogging: 'true'
-});
-
-dbService.createTest();
-
-
-
-
-
-
-
-
-//index.js
-/*
-var Person = require('./module.js');
-var person = new Person('John');
-person.sayName();
-*/
-
-
-/*
-var rFile = 'restroom.json';
-var wFile = 'restroom2.json';
-
-jsonfile.readFile(rFile, function(err, objs) {
-  jsonfile.spaces = 2;
-  objs['results'].forEach(function (obj, index) {
-
-  });
-});
-
-jsonfile.writeFile(wFile, commentObj);
-*/
-
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
-
 
 // error handlers
 
@@ -102,9 +77,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
 module.exports = app;
 
+//console.log(module);
 
-//Init
+//DB Init
 dbService.sync();
