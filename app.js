@@ -27,7 +27,7 @@ var jsonfile = require('jsonfile');
 
 var app = express();
 app.use(cors({
-    origin: 'http://localhost:8100'
+    origin: '*'
 }));
 
 // view engine setup
