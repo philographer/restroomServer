@@ -10,12 +10,10 @@ var pg = require('pg');
 var Sequelize = require('sequelize');
 const DbService = require('./lib/service/dbService');
 const dbService = new DbService({
-    dbHost: 'localhost',
-    dbPort: '5432',
+    dbName: 'restroomdb',
+    dbLogging: 'true',
     dbUsername: 'yuhogyun',
-    dbPassword: 'ghrbsdl114!',
-    dbName: 'restroom',
-    dbLogging: 'true'
+    dbPassword: 'ghrbsdl114'
 });
 var cors = require('cors');
 //console.log(dbService.getSequelize() == dbService);

@@ -26,7 +26,7 @@ router.get('/restroom/detail', function(req,res){
 });
 
 router.post('/restroom', function(req, res) {
-  app.dbService.createRestroom(req.body).then(function(result){
+  app.dbService.requestRestroom(req.body['data']).then(function(result){
     res.status(200).json(result);
   }).catch(function(error){
     res.status(500).json({error: "error"});
@@ -83,7 +83,7 @@ router.get('/restroom/comment', function(req, res){
 router.post('/auth/facebook',function(req,res){
   console.log("진입");
   const client_id = '1749580705320334';
-  const redirectUrl = 'http://localhost/';
+  const redirectUrl = 'http://localhost:8100/';
   const secret = '1f6ef3bc5f6c7d4239c037a54a457fc3';
   const code = req.body.code;
 
@@ -105,6 +105,7 @@ router.post('/auth/facebook',function(req,res){
 
 });
 
+/*
 router.get('/test', function(req, res){
   var paramObj = {
     comment: "hello",
@@ -116,11 +117,13 @@ router.get('/test', function(req, res){
   }).then(function(error){
   });
 });
+*/
 
 /*
 router.get('/test',function(req, res){
   var rFile = '../restroom.json';
   jsonfile.readFile(rFile, function(err, objs){
+    console.log
     jsonfile.spaces = 2;
     //console.log(objs);
     objs['results'].forEach(function(obj, index){
@@ -129,5 +132,6 @@ router.get('/test',function(req, res){
   });
 });
 */
+
 
 module.exports = router;
