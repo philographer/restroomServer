@@ -82,13 +82,7 @@ router.get('/restroom/comment', function(req, res){
 
 router.post('/auth/facebook',function(req,res){
   console.log("진입");
-  const client_id = '1749580705320334';
-  const redirectUrl = 'http://localhost:8100/';
-  const secret = '1f6ef3bc5f6c7d4239c037a54a457fc3';
-  const code = req.body.code;
-
-  app.dbService.fbAuth(client_id,redirectUrl,secret,code).then(function(obj){
-    console.log(redirectUrl);
+  app.dbService.fbAuth(req.body).then(function(obj){
     app.dbService.createUser(obj['facebookId'],obj['username']).then(function(id){
       res.status(200).json({
         access_token: obj['access_token'],
@@ -103,6 +97,10 @@ router.post('/auth/facebook',function(req,res){
     res.status(500).json({msg: "fbAuth Error"});
   });
 
+});
+
+router.post('/test2', function(req, res){
+  console.log(req.body)
 });
 
 /*
